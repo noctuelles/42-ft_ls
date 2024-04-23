@@ -1,18 +1,19 @@
-#include <dirent.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <sys/types.h>
+#include <stdio.h>
 
 #include "ft_args_parser.h"
+#include "ft_ls.h"
+#include "libft.h"
+#include "parsing/opts.h"
+#include "wrapper.h"
 
-static const t_args_parser_option_entry parser_option_entries[] = {
+static t_args_parser_option_entry parser_option_entries[] = {
     {
         .short_key                     = "l",
         .long_key                      = NULL,
         .argument                      = false,
         .long_key_argument_description = NULL,
         .description                   = "use a long listing format",
-        .parse_fn                      = NULL,
+        .parse_fn                      = parse_long_listing,
     },
     {
         .short_key                     = "a",
@@ -20,7 +21,7 @@ static const t_args_parser_option_entry parser_option_entries[] = {
         .argument                      = false,
         .long_key_argument_description = NULL,
         .description                   = "do not ignore entries starting with .",
-        .parse_fn                      = NULL,
+        .parse_fn                      = parse_all,
     },
     {
         .short_key                     = "t",
@@ -28,27 +29,59 @@ static const t_args_parser_option_entry parser_option_entries[] = {
         .argument                      = false,
         .long_key_argument_description = NULL,
         .description                   = "sort by modification time, newest first",
-        .parse_fn                      = NULL,
+        .parse_fn                      = parse_time,
+    },
+    {
+        .short_key                     = "r",
+        .long_key                      = "reverse",
+        .argument                      = false,
+        .long_key_argument_description = NULL,
+        .description                   = "reverse order while sorting",
+        .parse_fn                      = parse_reverse,
+    },
+    {
+        .short_key                     = "R",
+        .long_key                      = "recursive",
+        .argument                      = false,
+        .long_key_argument_description = NULL,
+        .description                   = "list subdirectories recursively",
+        .parse_fn                      = parse_recursive,
     }
 
 };
 
 void
-read(const char* path) {
+read(const t_ft_ls* ft_ls, const char* path) {
     DIR*           dir       = NULL;
     struct dirent* dir_entry = NULL;
+    t_dlist*       files     = NULL;
 
-    errno = 0;
-    dir   = opendir(path);
+    dir = w_opendir(path);
     if (dir == NULL) {
         return;
     }
-    while ((dir_entry = readdir(dir)) != NULL) {
+    while ((dir_entry = w_readdir(dir)) != NULL) {
     }
     (void)closedir(dir);
 }
 
 int
-main() {
+main(int argc, char** argv) {
+    t_ft_ls              ft_ls  = {0};
+    t_args_parser_config config = {
+        .argc               = argc,
+        .argv               = argv,
+        .parser_entries     = parser_option_entries,
+        .parser_entries_len = sizeof(parser_option_entries) / sizeof(parser_option_entries[0]),
+        .input              = &ft_ls,
+        .parse_argument_fn  = parse_argument,
+    };
+
+    if (ft_args_parser(&config) != 0) {
+        return (1);
+    }
+
+    read(ft_ls.path);
+
     return (0);
 }

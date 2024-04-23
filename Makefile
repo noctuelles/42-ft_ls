@@ -4,7 +4,9 @@ FT_PRINTF_DIR=ft_printf
 OBJS_DIR=objs
 INCLUDES_DIR=includes $(LIBFT_DIR)/includes $(FT_PRINTF_DIR)/includes
 
-SRCS=main.c
+SRCS=main.c \
+     wrapper.c \
+     parsing/opts.c
 
 LIBFT=$(LIBFT_DIR)/libft.a
 FT_PRINTF=$(FT_PRINTF_DIR)/libftprintf.a

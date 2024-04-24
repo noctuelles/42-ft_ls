@@ -31,8 +31,8 @@ parse_reverse(char *argument, t_args_parser_state *state, void *input) {
     (void)argument;
     (void)state;
 
-    t_ft_ls *ls              = input;
-    ls->options.sort_reverse = true;
+    t_ft_ls *ls         = input;
+    ls->options.reverse = true;
 
     return 0;
 }

@@ -6,6 +6,7 @@
 #define WRAPPER_H
 
 #include <dirent.h>
+#include <sys/stat.h>
 
 DIR           *w_opendir(const char *name);
 struct dirent *w_readdir(DIR *dirp);

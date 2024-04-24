@@ -2,8 +2,8 @@
 
 #include "ft_args_parser.h"
 #include "ft_ls.h"
-#include "libft.h"
 #include "parsing/opts.h"
+#include "walk.h"
 #include "wrapper.h"
 
 static t_args_parser_option_entry parser_option_entries[] = {
@@ -50,21 +50,6 @@ static t_args_parser_option_entry parser_option_entries[] = {
 
 };
 
-void
-read(const t_ft_ls* ft_ls, const char* path) {
-    DIR*           dir       = NULL;
-    struct dirent* dir_entry = NULL;
-    t_dlist*       files     = NULL;
-
-    dir = w_opendir(path);
-    if (dir == NULL) {
-        return;
-    }
-    while ((dir_entry = w_readdir(dir)) != NULL) {
-    }
-    (void)closedir(dir);
-}
-
 int
 main(int argc, char** argv) {
     t_ft_ls              ft_ls  = {0};
@@ -81,7 +66,9 @@ main(int argc, char** argv) {
         return (1);
     }
 
-    read(ft_ls.path);
+    if (file_walk(argv[1], &ft_ls.options) == -1) {
+        return (1);
+    }
 
     return (0);
 }

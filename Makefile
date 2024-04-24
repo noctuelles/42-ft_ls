@@ -6,6 +6,9 @@ INCLUDES_DIR=includes $(LIBFT_DIR)/includes $(FT_PRINTF_DIR)/includes
 
 SRCS=main.c \
      wrapper.c \
+     walk.c \
+     sort.c \
+     mem.c \
      parsing/opts.c
 
 LIBFT=$(LIBFT_DIR)/libft.a

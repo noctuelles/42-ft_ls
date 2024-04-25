@@ -13,5 +13,6 @@ int parse_reverse(char *argument, t_args_parser_state *state, void *input);
 int parse_all(char *argument, t_args_parser_state *state, void *input);
 int parse_long_listing(char *argument, t_args_parser_state *state, void *input);
 int parse_time(char *argument, t_args_parser_state *state, void *input);
+int parse_help(char *argument, t_args_parser_state *state, void *input);
 
 #endif  // OPTS_H

@@ -15,7 +15,7 @@ w_opendir(const char *name) {
 
     dir = opendir(name);
     if (dir == NULL) {
-        ft_error(0, errno, "opendir");
+        ft_error(0, errno, "cannot open '%s'", name);
     }
     return dir;
 }

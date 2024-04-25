@@ -69,3 +69,14 @@ parse_time(char *argument, t_args_parser_state *state, void *input) {
 
     return 0;
 }
+
+int
+parse_help(char *argument, t_args_parser_state *state, void *input) {
+    (void)argument;
+    (void)state;
+
+    t_ft_ls *ls      = input;
+    ls->options.help = true;
+
+    return 0;
+}

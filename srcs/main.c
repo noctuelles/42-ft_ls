@@ -1,12 +1,13 @@
 #include <stdio.h>
 
+#include "file_walk.h"
 #include "ft_args_parser.h"
 #include "ft_ls.h"
+#include "ft_printf.h"
 #include "parsing/opts.h"
-#include "walk.h"
 #include "wrapper.h"
 
-static t_args_parser_option_entry parser_option_entries[] = {
+static t_args_parser_option_entry g_parser_option_entries[] = {
     {
         .short_key                     = "l",
         .long_key                      = NULL,
@@ -46,18 +47,28 @@ static t_args_parser_option_entry parser_option_entries[] = {
         .long_key_argument_description = NULL,
         .description                   = "list subdirectories recursively",
         .parse_fn                      = parse_recursive,
+    },
+
+    {
+        .short_key                     = "h",
+        .long_key                      = "help",
+        .argument                      = false,
+        .long_key_argument_description = NULL,
+        .description                   = "show this help",
+        .parse_fn                      = parse_help,
     }
 
 };
 
 int
 main(int argc, char** argv) {
-    t_ft_ls              ft_ls  = {0};
+    t_ft_ls ft_ls = {0};
+
     t_args_parser_config config = {
         .argc               = argc,
         .argv               = argv,
-        .parser_entries     = parser_option_entries,
-        .parser_entries_len = sizeof(parser_option_entries) / sizeof(parser_option_entries[0]),
+        .parser_entries     = g_parser_option_entries,
+        .parser_entries_len = sizeof(g_parser_option_entries) / sizeof(g_parser_option_entries[0]),
         .input              = &ft_ls,
         .parse_argument_fn  = parse_argument,
     };
@@ -65,7 +76,11 @@ main(int argc, char** argv) {
     if (ft_args_parser(&config) != 0) {
         return (1);
     }
-
+    if (ft_ls.options.help) {
+        ft_printf("usage: %s [options] [file ...]\n", argv[0]);
+        ft_args_parser_print_docs(&config);
+        return (0);
+    }
     if (file_walk(argv[1], &ft_ls.options) == -1) {
         return (1);
     }

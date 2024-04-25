@@ -10,6 +10,6 @@ void
 free_file_list(void *content) {
     t_file *file = content;
 
-    free((void *)file->file_name);
+    free((void *)file->name);
     free(file);
 }

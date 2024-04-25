@@ -6,6 +6,6 @@ AlwaysBreakAfterDefinitionReturnType: All
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
-ColumnLimit: 120
+ColumnLimit: 80
 AlignConsecutiveDeclarations: true
 AlignConsecutiveAssignments: true

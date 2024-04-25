@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-#include "file_walk.h"
 #include "ft_args_parser.h"
 #include "ft_ls.h"
 #include "ft_printf.h"
 #include "parsing/opts.h"
+#include "walk.h"
 #include "wrapper.h"
 
 static t_args_parser_option_entry g_parser_option_entries[] = {
@@ -21,16 +21,16 @@ static t_args_parser_option_entry g_parser_option_entries[] = {
         .long_key                      = "all",
         .argument                      = false,
         .long_key_argument_description = NULL,
-        .description                   = "do not ignore entries starting with .",
-        .parse_fn                      = parse_all,
+        .description = "do not ignore entries starting with .",
+        .parse_fn    = parse_all,
     },
     {
         .short_key                     = "t",
         .long_key                      = "time",
         .argument                      = false,
         .long_key_argument_description = NULL,
-        .description                   = "sort by modification time, newest first",
-        .parse_fn                      = parse_time,
+        .description = "sort by modification time, newest first",
+        .parse_fn    = parse_time,
     },
     {
         .short_key                     = "r",
@@ -68,9 +68,10 @@ main(int argc, char** argv) {
         .argc               = argc,
         .argv               = argv,
         .parser_entries     = g_parser_option_entries,
-        .parser_entries_len = sizeof(g_parser_option_entries) / sizeof(g_parser_option_entries[0]),
-        .input              = &ft_ls,
-        .parse_argument_fn  = parse_argument,
+        .parser_entries_len = sizeof(g_parser_option_entries) /
+                              sizeof(g_parser_option_entries[0]),
+        .input             = &ft_ls,
+        .parse_argument_fn = parse_argument,
     };
 
     if (ft_args_parser(&config) != 0) {
@@ -81,7 +82,10 @@ main(int argc, char** argv) {
         ft_args_parser_print_docs(&config);
         return (0);
     }
-    if (file_walk(argv[1], &ft_ls.options) == -1) {
+    if (ft_ls.path == NULL) {
+        ft_ls.path = DEFAULT_PATH;
+    }
+    if (file_walk(ft_ls.path, &ft_ls.options) == -1) {
         return (1);
     }
 

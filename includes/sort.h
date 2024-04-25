@@ -5,9 +5,7 @@
 #ifndef SORT_H
 #define SORT_H
 
-#include <stdbool.h>
-
-int sort_by_file_name(void *a, void *b);
-int sort_by_time(void *a, void *b);
+int sort_by_file_name(const void *a, const void *b);
+int sort_by_time(const void *a, const void *b);
 
 #endif  // SORT_H

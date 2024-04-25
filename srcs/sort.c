@@ -6,15 +6,15 @@
 #include "libft.h"
 
 int
-sort_by_file_name(void *a, void *b) {
+sort_by_file_name(const void *a, const void *b) {
     const t_file *file_a = a;
     const t_file *file_b = b;
 
-    return ft_strcmp(file_a->name, file_b->name) > 0;
+    return ft_strcmp_ignore_case(file_a->name, file_b->name) > 0;
 }
 
 int
-sort_by_time(void *a, void *b) {
+sort_by_time(const void *a, const void *b) {
     const t_file *file_a = a;
     const t_file *file_b = b;
 

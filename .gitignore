@@ -2,3 +2,5 @@ objs
 *.a
 ft_ls
 test
+callgrind*
+cachegrind*

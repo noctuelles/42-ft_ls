@@ -24,9 +24,9 @@ CC=gcc
 RM=rm -rf
 MKDIR=mkdir -p
 
-CFLAGS=-Wall -Werror -Wextra -Wpedantic
+CFLAGS=-Wall -Werror -Wextra -Wpedantic -g3
 
-DEBUG_FLAGS=-g3
+DEBUG_FLAGS=
 
 all: $(NAME)
 clean:
